@@ -1,18 +1,17 @@
 import { useForm } from "react-hook-form"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Product } from "../../types/product.type"
-import { ErrorMessage } from "../../components/Error.Message"
-import { getCategory, useRegisterProduct, useUpdateProduct } from "../../api/DevInventoryAPI"
-import { toast } from "sonner"
+import { useQuery } from "@tanstack/react-query"
+import { Product } from "../types"
+import { ErrorMessage } from "../../../components/Error.Message"
+import { getCategory } from "../../../api/DevInventoryAPI"
+import { useProductForm } from '../hooks/useProductForm'
 
-interface ProductFormAddProps {
-  defaultValues?: Product
+interface ProductFormProps {
+  defaultValues?: Product | null
   onClose: () => void
 }
 
-export const ProductFormAdd: React.FC<ProductFormAddProps> = ({ onClose, defaultValues }) => {
+export const ProductForm: React.FC<ProductFormProps> = ({ onClose, defaultValues }) => {
 
-  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryFn: getCategory,
@@ -25,48 +24,26 @@ export const ProductFormAdd: React.FC<ProductFormAddProps> = ({ onClose, default
     code: '',
     name: '',
     description: '',
-    category_id: {
-      name: ''
-    },
+    category_id: { _id: 0, name: "" },
     brand: '',
     price: 0,
     stock: 0
   }
 
-  const { mutate: registerProduct } = useRegisterProduct()
-
-  const { mutate: updateProduct } = useUpdateProduct()
-
   const { register, reset, handleSubmit, formState: { errors } } = useForm<Product>({
     defaultValues: defaultValues ?? initialValues
   })
 
-  const handleregister = (formData: Product) => {
-    if (defaultValues && defaultValues._id) {
-      // Si hay un _id, es edición
-      updateProduct({ ...formData, _id: defaultValues._id }, {
-        onSuccess: () => {
-          toast.success('Producto actualizado correctamente');
-          reset();
-          onClose();
-          queryClient.invalidateQueries({ queryKey: ['product'] });
-        },
-      });
-    } else {
-      // Si no hay _id, es registro nuevo
-      registerProduct(formData, {
-        onSuccess: () => {
-          toast.success('Producto registrado correctamente');
-          reset();
-          onClose();
-          queryClient.invalidateQueries({ queryKey: ['product'] });
-        },
-      });
-    }
-  };
-  
+  const { handleRegister } = useProductForm({
+    defaultValues,
+    onSuccessCallback: () => {
+      reset()
+      onClose()
+    },
+  })
+
   return (
-    <form onSubmit={handleSubmit(handleregister)} className="grid grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit(handleRegister)} className="grid grid-cols-2 gap-4">
       {/* Código del producto */}
       <div className="col-span-1">
         <label className="text-sm text-slate-500">Código del producto</label>
@@ -99,8 +76,8 @@ export const ProductFormAdd: React.FC<ProductFormAddProps> = ({ onClose, default
         {errors.description && <ErrorMessage>{errors.description.message}</ErrorMessage>}
       </div>
 
-      {/* Categoría */}
-      <div className="col-span-1">
+       {/* Categoría */}
+       <div className="col-span-1">
         <label className="text-sm text-slate-500">Categoría</label>
         <select
           defaultValue={defaultValues?.category_id?._id}  // Selecciona automáticamente si viene algo
@@ -137,6 +114,7 @@ export const ProductFormAdd: React.FC<ProductFormAddProps> = ({ onClose, default
         <label className="text-sm text-slate-500">Precio</label>
         <input
           type="number"
+          step="0.01" // <- Esto permite ingresar decimales como 10.5, 99.99, etc.
           className="w-full bg-slate-200 border-none p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
           {...register('price', { required: "El precio es obligatorio", valueAsNumber: true })}
         />

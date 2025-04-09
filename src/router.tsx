@@ -3,7 +3,7 @@ import { AuthLayout } from "./layouts/Auth.Layout";
 import LoginView from "./views/LoginView";
 import AppLayout from "./layouts/App.Layout";
 import DashboardView from "./views/dashboard/DashboardView";
-import { ProductView } from "./views/product/ProductView";
+import { ProductView } from "./modules/products/ProductPage";
 
 export default function Router() {
     return (
