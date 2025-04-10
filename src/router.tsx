@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthLayout } from "./layouts/Auth.Layout";
-import LoginView from "./views/LoginView";
+import LoginView from "./modules/login/LoginView";
 import AppLayout from "./layouts/App.Layout";
 import DashboardView from "./views/dashboard/DashboardView";
 import { ProductView } from "./modules/products/ProductPage";
 import { CategoryPage } from "./modules/category/CategoryPage";
+import RegisterView from "./modules/login/RegisterView";
 
 export default function Router() {
     return (
@@ -12,6 +13,7 @@ export default function Router() {
             <Routes>
                 <Route element={<AuthLayout/>}>
                     <Route path='/auth/login' element={<LoginView />} />
+                    <Route path='/auth/register' element={<RegisterView />} />
                 </Route>
                 <Route element={<AppLayout/>}>
                     <Route path='/admin/dashboard' element={<DashboardView />} />
