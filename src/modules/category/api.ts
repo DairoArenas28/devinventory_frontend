@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import api from "../../config/axios"
 import { Category } from "./types"
+import { toast } from "sonner";
 
 
 export const createCategory = async (formData: Category): Promise<Category | null> => {
@@ -33,11 +34,11 @@ export const updateCategory = async (formData: Category): Promise<Category | nul
 
 export const deleteCategory = async (id: Number) => {
     try {
-        const { data } = await api.delete(`/category/${id}}`)
+        const { data } = await api.delete(`/category/${id}`)
         return data
     } catch (error) {
         if (isAxiosError(error)) {
-            console.error("Error en la solicitud:", error.response?.data || error.message);
+            toast.error('Error al eliminar la categoria ', error.response?.data.error )
         } else {
             console.error("Error inesperado:", error);
         }

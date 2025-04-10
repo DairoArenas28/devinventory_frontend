@@ -34,7 +34,7 @@ export const useCategoryForm = ({ defaultValues, onSuccessCallback }: UseProduct
 
   const handleDelete = (id: number, onFinish?: () => void) => {
     if (!id) return;
-
+    console.log(id)
     deleteCategory.mutate(id, {
       onSuccess: () => {
         toast.success("Categoria eliminada correctamente");

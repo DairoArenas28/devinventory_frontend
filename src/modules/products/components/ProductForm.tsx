@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form"
 import { useQuery } from "@tanstack/react-query"
-import { Product } from "../types"
+import { Product, ProductResponse } from "../types"
 import { ErrorMessage } from "../../../components/Error.Message"
-import { getCategory } from "../../../api/DevInventoryAPI"
+import { getCategoryFind } from "../../../api/DevInventoryAPI"
 import { useProductForm } from '../hooks/useProductForm'
 
 interface ProductFormProps {
@@ -13,13 +13,13 @@ interface ProductFormProps {
 export const ProductForm: React.FC<ProductFormProps> = ({ onClose, defaultValues }) => {
 
 
-  const { data, isLoading } = useQuery({
-    queryFn: getCategory,
+  const { data, isLoading, error } = useQuery({
+    queryFn: getCategoryFind,
     queryKey: ['category'],
     retry: 1,
     refetchOnWindowFocus: false
   });
-
+  console.log(data)
   const initialValues = {
     code: '',
     name: '',
@@ -33,7 +33,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onClose, defaultValues
   const { register, reset, handleSubmit, formState: { errors } } = useForm<Product>({
     defaultValues: defaultValues ?? initialValues
   })
-
   const { handleRegister } = useProductForm({
     defaultValues,
     onSuccessCallback: () => {
@@ -41,6 +40,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onClose, defaultValues
       onClose()
     },
   })
+
+  if (error instanceof Error) return <p>Error: {error.message}</p>
 
   return (
     <form onSubmit={handleSubmit(handleRegister)} className="grid grid-cols-2 gap-4">
@@ -88,9 +89,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onClose, defaultValues
           {isLoading ? (
             <option value="">Cargando...</option>
           ) : (
-            data?.map(category => (
-              <option key={category._id} value={category._id}>
-                {category.code} - {category.name}
+            data?.data.map(cat => (
+              <option key={cat._id} value={cat._id}>
+                {cat.code} - {cat.name}
               </option>
             ))
           )}
