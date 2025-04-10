@@ -1,5 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
-import { Menu, LayoutDashboard, Settings, LogOut, ShoppingBag } from "lucide-react";
+import { Menu, LayoutDashboard, Settings, LogOut, ShoppingBag, Layers } from "lucide-react";
 import { useState } from "react";
 import { Toaster } from "sonner";
 
@@ -10,7 +10,8 @@ export default function AdminView() {
     const navigation = [
         { name: "Dashboard", href: "/admin/dashboard" , icon: LayoutDashboard },
         { name: "Settings", href: "", icon: Settings },
-        { name: "Product", href: "/admin/product", icon: ShoppingBag }
+        { name: "Product", href: "/admin/product", icon: ShoppingBag },
+        { name: "Category", href: "/admin/category", icon: Layers }
     ];
 
     return (

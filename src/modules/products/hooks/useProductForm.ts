@@ -32,7 +32,7 @@ export const useProductForm = ({ defaultValues, onSuccessCallback }: UseProductF
     }
   }
 
-  const handleDelete = (id: number | null, onFinish?: () => void) => {
+  const handleDelete = (id: number, onFinish?: () => void) => {
     if (!id) return;
 
     deleteProduct.mutate(id, {

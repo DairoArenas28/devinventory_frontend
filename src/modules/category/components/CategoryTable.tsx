@@ -1,15 +1,15 @@
 import { Pencil, Trash2 } from "lucide-react";
-import { Product, ProductResponse } from "../types"; // Ajusta la ruta según tu proyecto
+import { Category, CategoryResponse } from "../types";
 
-interface ProductTableProps {
-  data: ProductResponse;
-  setProductToEdit: (product: Product) => void;
+interface CategoryTableProps {
+  data: CategoryResponse;
+  setProductToEdit: (product: Category) => void;
   setModalOpen: (open: boolean) => void;
   setSelectedId: (id: number) => void;
   setShowConfirm: (show: boolean) => void;
 }
 
-export const ProductTable: React.FC<ProductTableProps> = ({
+export const CategoryTable: React.FC<CategoryTableProps> = ({
   data,
   setProductToEdit,
   setModalOpen,
@@ -26,21 +26,17 @@ export const ProductTable: React.FC<ProductTableProps> = ({
         <tr>
           <th className="px-6 py-3 text-left">Código</th>
           <th className="px-6 py-3 text-left">Nombre</th>
-          <th className="px-6 py-3 text-left">Categoría</th>
-          <th className="px-6 py-3 text-left">Precio</th>
-          <th className="px-6 py-3 text-left">Stock</th>
+          <th className="px-6 py-3 text-left">Descripción</th>
           <th></th>
           <th></th>
         </tr>
       </thead>
       <tbody className="text-gray-700 divide-y divide-gray-200">
-        {data.data.map((item: Product) => (
+        {data.data.map((item: Category) => (
           <tr key={item._id} className="hover:bg-gray-50">
             <td className="px-6 py-3">{item.code}</td>
             <td className="px-6 py-3">{item.name}</td>
-            <td className="px-6 py-3">{item.category_id?.name || "Sin categoría"}</td>
-            <td className="px-6 py-3">{item.price}</td>
-            <td className="px-6 py-3">{item.stock}</td>
+            <td className="px-6 py-3">{item.description}</td>
             <td>
               <button
                 onClick={() => {

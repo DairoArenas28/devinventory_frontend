@@ -2,9 +2,14 @@ import { isAxiosError } from "axios"
 import api from "../config/axios"
 import { User } from "../types/user.type"
 import {  ProductResponse } from "../modules/products/types"
-import { Category } from "../types/category.type"
+import { CategoryResponse } from "../modules/category/types"
 
 interface GetProductProps {
+    page: number
+    limit: number
+}
+
+interface GetCategoryProps {
     page: number
     limit: number
 }
@@ -34,15 +39,16 @@ export async function getProduct({ page, limit }: GetProductProps): Promise<Prod
     }
   }
 
-export async function getCategory() {
+export async function getCategory({page, limit} : GetCategoryProps): Promise<CategoryResponse> {
     try {
-        const { data } = await api<Category[]>('/category')
+        const { data } = await api<CategoryResponse>(`/category?page=${page}&limit=${limit}`)
         //console.log(data)
         return data
     } catch (error) {
         if (isAxiosError(error) && error.message) {
             throw new Error(error.response?.data.error);
         }
+        throw new Error('Ocurrió un error al obtener las categorias');
     }
 }
 

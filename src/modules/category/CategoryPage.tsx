@@ -1,32 +1,32 @@
 import { useQuery } from "@tanstack/react-query";
 import { FilePlus2 } from "lucide-react";
 import { useState } from "react";
-import { getProduct } from "../../api/DevInventoryAPI";
-import { Product, ProductResponse } from "./types";
+import { getCategory } from "../../api/DevInventoryAPI";
 import Modal from "../../components/Modal";
-import { ProductForm } from "./components/ProductForm";
+import { CategoryForm } from "./components/CategoryForm";
 import { ModalConfirm } from "../../components/ModalConfirm";
 import { Pagination } from "../../components/Pagination";
-import { useProductForm } from "./hooks/useProductForm";
-import { ProductTable } from "./components/ProductTable";
+import { useCategoryForm } from "./hooks/useCategoryForm";
+import { CategoryTable } from "./components/CategoryTable";
+import { Category, CategoryResponse } from "./types";
 
-export const ProductView = () => {
+export const CategoryPage = () => {
 
-    const [productToEdit, setProductToEdit] = useState<Product | null>(null);
+    const [productToEdit, setProductToEdit] = useState<Category | null>(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [page, setPage] = useState(1);
     const limit = 10;
 
-    const { data, isLoading, isError, error } = useQuery<ProductResponse>({
-        queryFn: () => getProduct({ page, limit }),
-        queryKey: ['product', page],
+    const { data, isLoading, isError, error } = useQuery<CategoryResponse>({
+        queryFn: () => getCategory({ page, limit }),
+        queryKey: ['category', page],
         retry: 1,
         refetchOnWindowFocus: false
     });
 
-    const { handleDelete } = useProductForm({
+    const { handleDelete } = useCategoryForm({
         defaultValues: null,
         onSuccessCallback: () => {
             setModalOpen(false);
@@ -65,7 +65,7 @@ export const ProductView = () => {
             {/* Tabla o mensaje vacío */}
 
             {data && (
-                <ProductTable
+                <CategoryTable
                     data={data}
                     setProductToEdit={setProductToEdit}
                     setModalOpen={setModalOpen}
@@ -89,9 +89,9 @@ export const ProductView = () => {
                     setModalOpen(false);
                     setProductToEdit(null);
                 }}
-                title={productToEdit ? 'Editar Producto' : 'Agregar Producto'}
+                title={productToEdit ? 'Editar Categoria' : 'Agregar Categoria'}
             >
-                <ProductForm
+                <CategoryForm
                     defaultValues={productToEdit}
                     onClose={() => {
                         setModalOpen(false);
@@ -103,7 +103,7 @@ export const ProductView = () => {
             {/* Modal para confirmar si desea eliminar el registro */}
             <ModalConfirm
                 isOpen={showConfirm}
-                message="¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer."
+                message="¿Estás seguro de eliminar esta categoria? Esta acción no se puede deshacer."
                 onClose={() => setShowConfirm(false)}
                 onConfirm={confirmDelete}
             />
