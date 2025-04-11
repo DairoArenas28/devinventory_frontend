@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "../../components/Error.Message";
+import { ErrorMessage } from "../../shared/components/Error.Message";
 import { LoginForm } from "./types"; 
 import api from "../../config/axios";
 import { toast } from "sonner";

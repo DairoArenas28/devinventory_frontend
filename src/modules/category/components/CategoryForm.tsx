@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { Category } from "../types"
-import { ErrorMessage } from "../../../components/Error.Message"
+import { ErrorMessage } from "../../../shared/components/Error.Message"
 import { useCategoryForm } from "../hooks/useCategoryForm"
 
 interface ProductFormProps {

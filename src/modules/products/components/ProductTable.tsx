@@ -1,10 +1,11 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { Product, ProductResponse } from "../types"; // Ajusta la ruta según tu proyecto
+import { useAppDispatch } from "../../../app/hooks";
+import { open } from "../../../features/ui/modalSlice";
 
 interface ProductTableProps {
   data: ProductResponse;
   setProductToEdit: (product: Product) => void;
-  setModalOpen: (open: boolean) => void;
   setSelectedId: (id: number) => void;
   setShowConfirm: (show: boolean) => void;
 }
@@ -12,10 +13,12 @@ interface ProductTableProps {
 export const ProductTable: React.FC<ProductTableProps> = ({
   data,
   setProductToEdit,
-  setModalOpen,
   setSelectedId,
   setShowConfirm,
 }) => {
+
+  const dispatch = useAppDispatch()
+
   if (!data || data.data.length === 0) {
     return <div className="p-4 text-gray-600">No hay productos disponibles.</div>;
   }
@@ -45,7 +48,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({
               <button
                 onClick={() => {
                   setProductToEdit(item);
-                  setModalOpen(true);
+                  dispatch(open())
                 }}
               >
                 <Pencil color="#0011ff" />

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { useQuery } from "@tanstack/react-query"
 import { Product, ProductResponse } from "../types"
-import { ErrorMessage } from "../../../components/Error.Message"
+import { ErrorMessage } from "../../../shared/components/Error.Message"
 import { getCategoryFind } from "../../../api/DevInventoryAPI"
 import { useProductForm } from '../hooks/useProductForm'
 
