@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthLayout } from "./layouts/Auth.Layout";
 import LoginView from "./modules/login/LoginView";
 import AppLayout from "./layouts/App.Layout";
-import DashboardView from "./views/dashboard/DashboardView";
+import DashboardView from "./modules/dashboard/DashboardView";
 import { ProductView } from "./modules/products/ProductPage";
 import { CategoryPage } from "./modules/category/CategoryPage";
 import RegisterView from "./modules/login/RegisterView";
