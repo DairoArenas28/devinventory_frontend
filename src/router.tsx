@@ -6,7 +6,11 @@ import DashboardView from "./modules/dashboard/DashboardView";
 import { ProductView } from "./modules/products/ProductPage";
 import { CategoryPage } from "./modules/category/CategoryPage";
 import RegisterView from "./modules/login/RegisterView";
+
+//Componentes del cliente
 import { ShopLayout } from "./modules/shop/layout/ShopLayout";
+import HomePage from './modules/shop/pages/HomePage'
+import CategoryPageView from './modules/shop/pages/CategoryPage'
 
 export default function Router() {
     return (
@@ -22,7 +26,8 @@ export default function Router() {
                     <Route path='/admin/category' element={<CategoryPage />} />
                 </Route>
                 <Route element={<ShopLayout/>}>
-                    <Route path='/' element={<DashboardView />} />
+                    <Route path='/' element={<HomePage />} />
+                    <Route path='/category' element={<CategoryPageView />} />
                 </Route>
             </Routes>
         </BrowserRouter>
