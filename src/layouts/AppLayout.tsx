@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { getUser } from "../api/DevInventoryAPI"
 import { Navigate } from "react-router-dom"
-import AdminView from "../shared/components/Admin.View"
+import AdminView from "../shared/components/AdminView"
 
 
 export default function AppLayout() {

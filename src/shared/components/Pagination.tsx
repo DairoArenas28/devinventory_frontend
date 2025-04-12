@@ -7,12 +7,8 @@ interface PaginationProps {
 
 export const Pagination: React.FC<PaginationProps> = ({ total}) => {
     const currentPage = useAppSelector(state => state.page.value)
-    const currentLimit = useAppSelector(state => state.page.value)
-    console.log(currentPage)
-    console.log("Limit", currentLimit)
-    console.log("Total ", total)
+    const currentLimit = useAppSelector(state => state.limit.value)
     const totalPages = Math.ceil(total / currentLimit);
-    console.log("Paginas " , totalPages)
     const dispatch = useAppDispatch()
 
     const handleClick = (pageNumber: number) => {
