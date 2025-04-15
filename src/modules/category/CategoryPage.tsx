@@ -11,15 +11,17 @@ import { CategoryTable } from "./components/CategoryTable";
 import { Category, CategoryResponse } from "./types";
 import { close, open } from "../../features/ui/modalSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { closeConfirm } from "../../features/ui/modalConfirmSlice";
 
 export const CategoryPage = () => {
 
     const [productToEdit, setProductToEdit] = useState<Category | null>(null);
-    const [showConfirm, setShowConfirm] = useState(false);
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
     const page = useAppSelector(state => state.page.value)
     const limit = useAppSelector(state => state.limit.value)
+
+    const modalConfirm = useAppSelector(state => state.openModalConfirm.value)
     
     const dispatch = useAppDispatch()
 
@@ -42,7 +44,7 @@ export const CategoryPage = () => {
         if (selectedId) {
             handleDelete(selectedId, () => {
                 setSelectedId(null);
-                setShowConfirm(false);
+                dispatch(closeConfirm());
             });
         }
     };
@@ -73,7 +75,6 @@ export const CategoryPage = () => {
                     data={data}
                     setProductToEdit={setProductToEdit}
                     setSelectedId={setSelectedId}
-                    setShowConfirm={setShowConfirm}
                 />
             )}
 
@@ -102,9 +103,9 @@ export const CategoryPage = () => {
 
             {/* Modal para confirmar si desea eliminar el registro */}
             <ModalConfirm
-                isOpen={showConfirm}
+                isOpen={modalConfirm}
                 message="¿Estás seguro de eliminar esta categoria? Esta acción no se puede deshacer."
-                onClose={() => setShowConfirm(false)}
+                onClose={() => dispatch(closeConfirm())}
                 onConfirm={confirmDelete}
             />
         </div>

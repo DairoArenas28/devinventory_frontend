@@ -2,19 +2,18 @@ import { Pencil, Trash2 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { Category, CategoryResponse } from "../types";
 import { open } from "../../../features/ui/modalSlice";
+import { openConfirm } from "../../../features/ui/modalConfirmSlice";
 
 interface CategoryTableProps {
   data: CategoryResponse;
   setProductToEdit: (product: Category) => void;
   setSelectedId: (id: number) => void;
-  setShowConfirm: (show: boolean) => void;
 }
 
 export const CategoryTable: React.FC<CategoryTableProps> = ({
   data,
   setProductToEdit,
-  setSelectedId,
-  setShowConfirm,
+  setSelectedId
 }) => {
 
   const dispatch = useDispatch()
@@ -54,7 +53,7 @@ export const CategoryTable: React.FC<CategoryTableProps> = ({
               <button
                 onClick={() => {
                   setSelectedId(item._id);
-                  setShowConfirm(true);
+                  dispatch(openConfirm());
                 }}
               >
                 <Trash2 color="#ff0000" />

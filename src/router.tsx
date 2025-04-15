@@ -24,6 +24,7 @@ export default function Router() {
                     <Route path='/admin/dashboard' element={<DashboardView />} />
                     <Route path='/admin/product' element={<ProductView />} />
                     <Route path='/admin/category' element={<CategoryPage />} />
+                    <Route path='/admin/order' element={<CategoryPage />} />
                 </Route>
                 <Route element={<ShopLayout/>}>
                     <Route path='/' element={<HomePage />} />
